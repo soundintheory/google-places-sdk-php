@@ -1,14 +1,18 @@
 {
-  "name": "rodrigobendia/google-places-sdk-php",
+  "name": "soundintheory/google-places-sdk-php",
   "type": "library",
   "description": "Google Places SDK for PHP",
-  "minimum-stability": "stable",
+  "minimum-stability": "dev",
   "license": "MIT",
   "keywords": ["google places", "sdk", "client", "guzzle", "HTTP"],
   "authors": [
     {
       "name": "Rodrigo Bendia",
       "email": "rodrigobendia@gmail.com"
+    },
+    {
+      "name": "Andy White",
+      "email": "andy@soundintheory.co.uk"
     }
   ],
   "require": {
