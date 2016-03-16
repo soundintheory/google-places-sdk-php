@@ -16,7 +16,7 @@ class PlacesApiClient
     protected $client;
 
     /** @var string Base URL. */
-    protected $baseUrl = 'https://maps.googleapis.com/maps/api/place';
+    protected $baseUrl = 'https://maps.googleapis.com/maps/api/';
 
     /** @var string|null API key. */
     protected $key = null;
@@ -27,8 +27,9 @@ class PlacesApiClient
      * @param string $key API key.
      * @param bool $parse Flag indicating if the responses should be auto parsed or returned as arrays.
      */
-    public function __construct($key = null)
+    public function __construct($library = 'place',$key = null)
     {
+        $this->baseUrl .= $library;
         $this->client = new GuzzleHttp\Client();
         $this->key = $key;
     }
@@ -47,7 +48,8 @@ class PlacesApiClient
             $params['key'] = $this->key;
 
         return $this->client->request($method, $this->baseUrl . $path . '/json', array(
-            'query' => $params
+            'query' => $params,
+            'verify'=>false
         ));
     }
 
@@ -56,9 +58,12 @@ class PlacesApiClient
      */
     public function __call($name, $args)
     {
+        if($name == 'call')
+            $name = "";
         $query = (is_array($args) && count($args) && is_array($args[0])) ? $args[0] : array();
-        $response = $this->callApi('GET', "/$name", $query);
+        $response = $this->callApi('GET', empty($name)?"":"/$name", $query);
 
         return new PlacesApiResponse($response);
     }
+
 }
