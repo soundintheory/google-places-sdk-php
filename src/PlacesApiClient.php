@@ -47,10 +47,17 @@ class PlacesApiClient
         if (!isset($params['key']))
             $params['key'] = $this->key;
 
-        return $this->client->request($method, $this->baseUrl . $path . '/json', array(
-            'query' => $params,
-            'verify'=>false
-        ));
+
+        if(strlen(urlencode ($path . '/json'.implode("&",$params))) > 2040){
+            throw new \Exception("URL too Long");
+        }else{
+            return $this->client->request($method, $this->baseUrl . $path . '/json', array(
+                'query' => $params,
+                'verify'=>false
+            ));
+        }
+
+
     }
 
     /**
@@ -67,3 +74,5 @@ class PlacesApiClient
     }
 
 }
+
+
